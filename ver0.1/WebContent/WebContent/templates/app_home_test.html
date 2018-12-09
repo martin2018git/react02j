@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ReElement Demo 1.0</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="templates/styles.css" />
+</head>
+<body>
+<div id="app-home"> 
+	<div id="app-home-header">{APP-HOME-HEADER}</div>
+	<div id="app-home-mid"> 
+		<div id="app-home-navig">{APP-HOME-NAVIG}</div>
+		<div id="app-home-content">
+			<div id="app-home-messages">{APP-HOME-MESSAGES}</div>
+			<div id="app-home-canvas">{APP-HOME-CANVAS}</div>
+		</div>
+	</div>
+	<div id="app-home-footer">{APP-HOME-FOOTER}</div>
+</div>
+
+<script>
+
+/*
+ * <body onload="myFunction()">...
+ 	 $(document).ready(function(){  }) 
+	 $(window).load(function(){ })
+ */
+ 
+ $(document).ready( onLoad() );
+
+ /*{SCRIPT-REGISTER}*/
+
+ /* MENU-NAVIGATION */
+
+ 
+/* var lastMenuSelected = null;
+ 
+function menuclick(ref,who,msg){
+	if( lastMenuSelected!=null ){
+		document.getElementById(lastMenuSelected).className = "app-icon";
+	}
+	document.getElementById(ref).className = "app-icon-selected";
+	lastMenuSelected = ref;
+	document.getElementById(who).reRefresh(msg);  
+}
+*/
+
+/* DYNAMIC CONTENT LOAD FUNCTIONS */
+
+function loadCanvas(msg){
+	document.getElementById('app-home-canvas').innerHTML = "User clicked "+msg;
+	$('#app-home-canvas').addClass("panel-loading");
+	/*$('#app-home-canvas').append('<div id="loading-image-canvas" style="position:relative;top:0;left:0;width: 100%;height:100%;z-index:2;opacity:0.4;filter: alpha(opacity = 50)"></div>');
+	$('#tab-panel').fadeIn(150);
+	$('#loading-image-canvas').css('background','gray');*/
+	$('#app-home-canvas').append('<img id="app-home-canvas-loading" class="panel-loading-icon" src="images/loadingDaisy.gif">'); 
+
+	setTimeout( function(){
+		$('#app-home-canvas').load('ContentLoader?cmd='+msg);
+		$('#app-home-canvas').removeClass("panel-loading");
+		$('app-home-canvas-loading').remove();
+		/*$('#app-home-canvas').fadeIn(150);*/
+    },0);
+}
+
+/* ON LOAD - FINALLY! */
+
+function onLoad(){
+	document.getElementById('app-home-canvas').reRefresh = loadCanvas;
+	
+	/*{SCRIPT-ON-LOAD}*/
+}
+
+</script>
+</body>
+
+</html>
